@@ -16,6 +16,9 @@ externalDocs:
   description: Find out more about Swagger
   url: http://swagger.io
 
+security:
+  - bearerAuth: []
+  
 servers:
   - url: http://localhost:3000/
 
@@ -25,13 +28,14 @@ tags:
     externalDocs:
       description: Find more
       url: https://m.karelia.fi
+
 paths:
   /data: 
     get:
       tags:
         - Sample dataset
       summary: Return a dataset
-      description: Returns a dataset with something...
+      description: Returns a dataset
       responses:
         '200':
           description: Succesful operation
@@ -43,7 +47,40 @@ paths:
                   $ref: '#/components/schemas/Data'
         '415':
           description: Unsupported mediatype
-          
+  /id: 
+    get:
+      tags:
+        - Sample dataset
+      summary: Get dataset with id
+      description: Return a dataset based on that id
+      responses:
+        '200':
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Data'
+        '415':
+          description: Unsupported mediatype
+  /: 
+    post:
+      tags:
+        - Post dataset
+      summary: Post data into database
+      description: Post data into database
+      responses:
+        '200':
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Data'
+        '409':
+          description: Record already exists                
 
 
   
@@ -62,4 +99,9 @@ components:
         surname:
           type: string
           example: Mies
-    
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -80,7 +80,29 @@ paths:
                 items:
                   $ref: '#/components/schemas/Data'
         '409':
-          description: Record already exists                
+          description: Record already exists 
+  /login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Logged in succesfully  
+        '401':
+          description: Wrong username or password  
+
 
 
   

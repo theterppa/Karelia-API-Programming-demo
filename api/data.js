@@ -1,10 +1,9 @@
 import { Router } from 'express';
-let router = Router();
+import {getData} from '../database.js';
 
-let data = [
-    { "id": "1", "Firstname": "Tero", "Surname": "Halonen" },
-    { "id": "2", "Firstname": "Jan", "Surname": "Šušteršič"}
-];
+let router = Router();
+let data = getData();
+
 
 router.get('/',(req, res) => {
     res.json(data);

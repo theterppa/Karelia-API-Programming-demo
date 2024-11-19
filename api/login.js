@@ -1,16 +1,11 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
+import {getUsers} from '../database.js'
 
 let router = Router();
+let users = getUsers();
 
-let users = [
-    {"username": "th", "password": "sala", 'token': ''},
-    {"username": "js", "password": "pass", 'token': ''},
-];
 
-export const getUsers = () => {
-    return users;
-}
 
 router.post('/',(req, res) => {
     const username = req.body.username;
@@ -21,6 +16,19 @@ router.post('/',(req, res) => {
         const token = jwt.sign({username: username}, 'my_secret_key', {
             expiresIn: '1h'
         })
+/*
+        const refreshToken = jwt.sign({username: username}, 'my_secret_key',{
+            expiresIn: '1d'
+        })
+        res.cookie('refreshToken', refreshToken, {httpOnly: true, sameSite: 'strict'})
+        .header('Authorization', 'Bearer '+accessToken)
+        .json({
+            'username': username,
+            'expires_in': '1h',
+        });
+    
+*/        
+
         user.token = token;    
         res.json({
             'username': username,
